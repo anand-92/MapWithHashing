@@ -74,10 +74,11 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     private static int mod(int a, int b) {
         assert b > 0 : "Violation of: b > 0";
 
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return 0;
+            int m = a % b;
+        if (a < 0 && m != 0) {
+            m += b;
+        }
+        return m;
     }
 
     /**
@@ -97,7 +98,8 @@ public class Map4<K, V> extends MapSecondary<K, V> {
      */
     private void createNewRep(int hashTableSize) {
 
-        // TODO - fill in body
+        this.size = 0;
+        this.hashTable = new Array1L<Map<K,V>>(hashTableSize);
 
     }
 
@@ -110,7 +112,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
      */
     public Map4() {
 
-        // TODO - fill in body
+        this.createNewRep(DEFAULT_HASH_TABLE_SIZE);
 
     }
 
@@ -124,7 +126,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
      */
     public Map4(int hashTableSize) {
 
-        // TODO - fill in body
+        this.createNewRep(hashTableSize);
 
     }
 
@@ -175,7 +177,9 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert value != null : "Violation of: value is not null";
         assert !this.hasKey(key) : "Violation of: key is not in DOMAIN(this)";
 
-        // TODO - fill in body
+        this.size++;
+        int indexOfHash = mod(key.hashCode(), this.hashTable.length());
+        this.hashTable.entry(bucketNumber).add(key, value);
 
     }
 
