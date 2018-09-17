@@ -183,11 +183,15 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     public final Pair<K, V> remove(K key) {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
+        
+        //decrement size by 1
+        this.size--;
+        
+        // compute index using mod function
+        int indexOfHash= mod(key.hashCode(), this.hashTable.length());
+        
+        //remove entry from hashTable and return
+        return this.hashTable.entry(indexOfHash).remove(key);             
     }
 
     @Override
