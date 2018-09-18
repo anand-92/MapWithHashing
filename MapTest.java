@@ -84,7 +84,8 @@ public abstract class MapTest {
     //Hudson - hasKey, constructor, removeAny
     
     //HUDSON'S TEST CASES FROM HOMEWORK 9
-     /*
+    
+      /*
      * standard test case for Map<String,String> constructor
      */
     @Test
@@ -112,10 +113,10 @@ public abstract class MapTest {
 
     @Test
     public final void removeTest1() {
-        Map<String, String> mExpected = this.createFromArgsTest("key1",
+        Map<String, String> mExpected = this.createFromArgsRef("key1",
                 "value1");
-        Map<String, String> m = this.createFromArgsRef("key1", "value1", "key2",
-                "value2");
+        Map<String, String> m = this.createFromArgsTest("key1", "value1",
+                "key2", "value2");
         m.remove("key2");
         assertEquals(mExpected, m);
     }
@@ -135,11 +136,12 @@ public abstract class MapTest {
     /*
      * standard test case for Map<String,String> removeAny method
      */
+    @Test
     public final void removeAnyTest1() {
         Map<String, String> m = this.createFromArgsRef("key1", "value1", "key2",
                 "value2");
-        Map<String, String> mExpected = this.createFromArgsTest("key1",
-                "value1", "key2", "value2");
+        Map<String, String> mExpected = this.createFromArgsRef("key1", "value1",
+                "key2", "value2");
         Map.Pair<String, String> p = m.removeAny();
         assertEquals(true, mExpected.hasKey(p.key()));
         mExpected.remove(p.key());
@@ -219,6 +221,4 @@ public abstract class MapTest {
         assertEquals(mExpected, m);
         assertEquals(iExpected, i);
     }
-}
-
 }
