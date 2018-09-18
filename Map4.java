@@ -213,10 +213,10 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
 
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return null;
+         // compute index using mod function
+        int indexOfHash= mod(key.hashCode(), this.hashTable.length());
+        
+        return this.hashTable.entry(indexOfHash).value(key);
     }
 
     @Override
