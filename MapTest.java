@@ -81,5 +81,144 @@ public abstract class MapTest {
     // hasKey, and size
     
     //Nik - add, remove, value, size
+    //Hudson - hasKey, constructor, removeAny
+    
+    //HUDSON'S TEST CASES FROM HOMEWORK 9
+     /*
+     * standard test case for Map<String,String> constructor
+     */
+    @Test
+    public final void constructorTest1() {
+        Map<String, String> m = this.constructorTest();
+        Map<String, String> mExpected = this.constructorRef();
+        assertEquals(mExpected, m);
+    }
+
+    /*
+     * standard test case for Map<String,String> add method
+     */
+    @Test
+    public final void addTest1() {
+        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> mExpected = this.createFromArgsRef("key1", "value1",
+                "key2", "value2");
+        m.add("key2", "value2");
+        assertEquals(mExpected, m);
+    }
+
+    /*
+     * standard test case for Map<String,String> remove method
+     */
+
+    @Test
+    public final void removeTest1() {
+        Map<String, String> mExpected = this.createFromArgsTest("key1",
+                "value1");
+        Map<String, String> m = this.createFromArgsRef("key1", "value1", "key2",
+                "value2");
+        m.remove("key2");
+        assertEquals(mExpected, m);
+    }
+
+    /*
+     * standard test case for Map<String,String> remove method
+     */
+    @Test
+    public final void removeTest2() {
+        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> mExpected = this.createFromArgsRef();
+        m.remove("key1");
+        assertEquals(mExpected, m);
+
+    }
+
+    /*
+     * standard test case for Map<String,String> removeAny method
+     */
+    public final void removeAnyTest1() {
+        Map<String, String> m = this.createFromArgsRef("key1", "value1", "key2",
+                "value2");
+        Map<String, String> mExpected = this.createFromArgsTest("key1",
+                "value1", "key2", "value2");
+        Map.Pair<String, String> p = m.removeAny();
+        assertEquals(true, mExpected.hasKey(p.key()));
+        mExpected.remove(p.key());
+        assertEquals(mExpected, m);
+    }
+
+    /*
+     * standard test case for Map<String,String> value method
+     */
+    @Test
+    public final void valueTest1() {
+        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> mExpected = this.createFromArgsRef("key1",
+                "value1");
+        String s = m.value("key1");
+        String sExpected = "value1";
+        assertEquals(mExpected, m);
+        assertEquals(sExpected, s);
+    }
+
+    /*
+     * standard test case for Map<String,String> hasKey method that returns true
+     */
+    @Test
+    public final void hasKeyTest1() {
+        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> mExpected = this.createFromArgsRef("key1",
+                "value1");
+        boolean b = m.hasKey("key1");
+        boolean bExpected = true;
+        assertEquals(mExpected, m);
+        assertEquals(bExpected, b);
+
+    }
+
+    /*
+     * standard test case for Map<String,String> hasKey method that returns
+     * false
+     */
+    @Test
+    public final void hasKeyTest2() {
+        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> mExpected = this.createFromArgsRef("key1",
+                "value1");
+        boolean b = m.hasKey("key2");
+        boolean bExpected = false;
+        assertEquals(mExpected, m);
+        assertEquals(bExpected, b);
+    }
+
+    /*
+     *
+     * standard test case for Map<String,String> size method
+     *
+     */
+
+    @Test
+    public final void sizeTest1() {
+        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> mExpected = this.createFromArgsRef("key1",
+                "value1");
+        int i = m.size();
+        int iExpected = 1;
+        assertEquals(mExpected, m);
+        assertEquals(iExpected, i);
+    }
+
+    /*
+     * standard test case for Map<String,String> size method with empty map
+     */
+    @Test
+    public final void sizeTest2() {
+        Map<String, String> m = this.createFromArgsTest();
+        Map<String, String> mExpected = this.createFromArgsRef();
+        int i = m.size();
+        int iExpected = 0;
+        assertEquals(mExpected, m);
+        assertEquals(iExpected, i);
+    }
+}
 
 }
