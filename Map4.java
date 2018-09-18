@@ -175,9 +175,13 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert value != null : "Violation of: value is not null";
         assert !this.hasKey(key) : "Violation of: key is not in DOMAIN(this)";
-
+        
+        //increment size by 1
         this.size++;
+        //compute index using mod function
         int indexOfHash = mod(key.hashCode(), this.hashTable.length());
+        
+        //add entry to hashTable
         this.hashTable.entry(indexOfHash).add(key, value);
 
     }
@@ -202,6 +206,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert this.size() > 0 : "Violation of: this /= empty_set";
         int k = 0;
         boolean foundValue = false;
+        //iterate through the hash table until a readable "bucket" is found.
         while (foundValue) {
             if (this.hashTable.mayBeExamined(k)) {
                 foundValue = true;
@@ -209,6 +214,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
                 k++;
             }
         }
+        //call removeAny() on the readable "bucket"
         Pair<K, V> result = this.hashTable.entry(k).removeAny();
         return result;
     }
