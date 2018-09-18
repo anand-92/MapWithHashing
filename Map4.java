@@ -208,7 +208,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
             indexes.add(i);
         }
         boolean foundValue = false;
-        while (foundValue == false) {
+        while (foundValue) {
             k = indexes.removeAny();
             if (this.hashTable.mayBeExamined(k)) {
                 foundValue = true;
