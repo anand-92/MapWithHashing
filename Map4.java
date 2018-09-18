@@ -179,7 +179,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
 
         this.size++;
         int indexOfHash = mod(key.hashCode(), this.hashTable.length());
-        this.hashTable.entry(bucketNumber).add(key, value);
+        this.hashTable.entry(indexOfHash).add(key, value);
 
     }
 
