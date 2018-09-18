@@ -1,7 +1,5 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import components.set.Set; 
-import components.set.Set2;
 import components.array.Array;
 import components.map.Map;
 import components.map.MapSecondary;
@@ -200,18 +198,15 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     }
 
     @Override
-    public final Pair<K, V> removeAny() {
+  public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: this /= empty_set";
-            Set<Integer> indexes = new Set2<Integer>();
-            int k = 0;
-        for (int i = 0; i < this.hashTable.length(); i++) {
-            indexes.add(i);
-        }
+        int k = 0;
         boolean foundValue = false;
         while (foundValue) {
-            k = indexes.removeAny();
             if (this.hashTable.mayBeExamined(k)) {
                 foundValue = true;
+            } else {
+                k++;
             }
         }
         Pair<K, V> result = this.hashTable.entry(k).removeAny();
