@@ -1,7 +1,10 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 import components.array.Array;
+import components.array.Array1L;
 import components.map.Map;
+import components.map.Map2;
 import components.map.MapSecondary;
 
 /**
@@ -32,7 +35,7 @@ import components.map.MapSecondary;
  *          (pf)
  * </pre>
  *
- * @Nik Anand and Hudson Arledge
+ * @author Put your name here
  *
  */
 public class Map4<K, V> extends MapSecondary<K, V> {
@@ -73,7 +76,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     private static int mod(int a, int b) {
         assert b > 0 : "Violation of: b > 0";
 
-            int m = a % b;
+        int m = a % b;
         if (a < 0 && m != 0) {
             m += b;
         }
@@ -98,7 +101,7 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     private void createNewRep(int hashTableSize) {
 
         this.size = 0;
-        this.hashTable = new Array1L<Map<K,V>>(hashTableSize);
+        this.hashTable = new Array1L<Map<K, V>>(hashTableSize);
 
     }
 
@@ -175,14 +178,21 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert value != null : "Violation of: value is not null";
         assert !this.hasKey(key) : "Violation of: key is not in DOMAIN(this)";
-        
+
         //increment size by 1
         this.size++;
+
         //compute index using mod function
         int indexOfHash = mod(key.hashCode(), this.hashTable.length());
-        
-        //add entry to hashTable
-        this.hashTable.entry(indexOfHash).add(key, value);
+        //if the bucket is readable, add the entry to the bucket
+        if (this.hashTable.mayBeExamined(indexOfHash)) {
+            this.hashTable.entry(indexOfHash).add(key, value);
+        } else {
+            //if the bucket is not readable, set entry to the bucket
+            Map<K, V> temp = new Map2<>();
+            temp.add(key, value);
+            this.hashTable.setEntry(indexOfHash, temp);
+        }
 
     }
 
@@ -190,19 +200,19 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     public final Pair<K, V> remove(K key) {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
-        
+
         //decrement size by 1
         this.size--;
-        
+
         // compute index using mod function
-        int indexOfHash= mod(key.hashCode(), this.hashTable.length());
-        
+        int indexOfHash = mod(key.hashCode(), this.hashTable.length());
+
         //remove entry from hashTable and return
-        return this.hashTable.entry(indexOfHash).remove(key);             
+        return this.hashTable.entry(indexOfHash).remove(key);
     }
 
     @Override
-  public final Pair<K, V> removeAny() {
+    public final Pair<K, V> removeAny() {
         assert this.size() > 0 : "Violation of: this /= empty_set";
         int k = 0;
         boolean foundValue = false;
@@ -224,20 +234,24 @@ public class Map4<K, V> extends MapSecondary<K, V> {
         assert key != null : "Violation of: key is not null";
         assert this.hasKey(key) : "Violation of: key is in DOMAIN(this)";
 
-         // compute index using mod function
-        int indexOfHash= mod(key.hashCode(), this.hashTable.length());
-        
+        // compute index using mod function
+        int indexOfHash = mod(key.hashCode(), this.hashTable.length());
+
         return this.hashTable.entry(indexOfHash).value(key);
     }
 
     @Override
     public final boolean hasKey(K key) {
         assert key != null : "Violation of: key is not null";
-        
+
         // compute index using mod function
-        int indexOfHash= mod(key.hashCode(), this.hashTable.length());
-        
-        return this.hashTable.entry(indexOfHash).hasKey(key);
+        int indexOfHash = mod(key.hashCode(), this.hashTable.length());
+        //if the index can be read, check if it contains key
+        if (this.hashTable.mayBeExamined(indexOfHash)) {
+            return this.hashTable.entry(indexOfHash).hasKey(key);
+        } else {
+            return false;
+        }
     }
 
     @Override
