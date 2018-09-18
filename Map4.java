@@ -222,20 +222,16 @@ public class Map4<K, V> extends MapSecondary<K, V> {
     @Override
     public final boolean hasKey(K key) {
         assert key != null : "Violation of: key is not null";
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return false;
+        
+        // compute index using mod function
+        int indexOfHash= mod(key.hashCode(), this.hashTable.length());
+        
+        return this.hashTable.entry(indexOfHash).hasKey(key);
     }
 
     @Override
     public final int size() {
-
-        // TODO - fill in body
-
-        // This line added just to make the component compilable.
-        return 0;
+        return this.size;
     }
 
     @Override
