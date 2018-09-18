@@ -79,5 +79,7 @@ public abstract class MapTest {
 
     // TODO - add test cases for constructor, add, remove, removeAny, value,
     // hasKey, and size
+    
+    //Nik - add, remove, value, size
 
 }
