@@ -34,7 +34,7 @@ import components.map.MapSecondary;
  *          (pf)
  * </pre>
  *
- * @author Put your name here
+ * @Nik Anand and Hudson Arledge
  *
  */
 public class Map4<K, V> extends MapSecondary<K, V> {
