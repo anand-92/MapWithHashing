@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import components.map.Map;
 
 /**
@@ -79,13 +83,14 @@ public abstract class MapTest {
 
     // TODO - add test cases for constructor, add, remove, removeAny, value,
     // hasKey, and size
-    
+
     //Nik - add, remove, value, size
+
     //Hudson - hasKey, constructor, removeAny
-    
+
     //HUDSON'S TEST CASES FROM HOMEWORK 9
-    
-      /*
+
+    /*
      * standard test case for Map<String,String> constructor
      */
     @Test
@@ -100,7 +105,20 @@ public abstract class MapTest {
      */
     @Test
     public final void addTest1() {
-        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> m = this.constructorTest();
+        Map<String, String> mExpected = this.createFromArgsRef("key1",
+                "value1");
+        m.add("key1", "value1");
+        assertEquals(mExpected, m);
+    }
+
+    /*
+     * standard test case for Map<String,String> add method (elements already
+     * present)
+     */
+    @Test
+    public final void addTest2() {
+        Map<String, String> m = this.createFromArgsRef("key1", "value1");
         Map<String, String> mExpected = this.createFromArgsRef("key1", "value1",
                 "key2", "value2");
         m.add("key2", "value2");
@@ -113,24 +131,27 @@ public abstract class MapTest {
 
     @Test
     public final void removeTest1() {
-        Map<String, String> mExpected = this.createFromArgsRef("key1",
-                "value1");
-        Map<String, String> m = this.createFromArgsTest("key1", "value1",
-                "key2", "value2");
-        m.remove("key2");
+        Map<String, String> m = this.createFromArgsTest("key1", "value1");
+        Map<String, String> mExpected = this.createFromArgsRef();
+
+        m.remove("key1");
         assertEquals(mExpected, m);
     }
 
     /*
-     * standard test case for Map<String,String> remove method
+     * standard test case for Map<String,String> remove method (elements already
+     * present)
      */
+
     @Test
     public final void removeTest2() {
-        Map<String, String> m = this.createFromArgsTest("key1", "value1");
-        Map<String, String> mExpected = this.createFromArgsRef();
-        m.remove("key1");
-        assertEquals(mExpected, m);
+        Map<String, String> m = this.createFromArgsTest("key1", "value1",
+                "key2", "value2");
+        Map<String, String> mExpected = this.createFromArgsRef("key1",
+                "value1");
 
+        m.remove("key2");
+        assertEquals(mExpected, m);
     }
 
     /*
@@ -194,7 +215,8 @@ public abstract class MapTest {
 
     /*
      *
-     * standard test case for Map<String,String> size method
+     * standard test case for Map<String,String> size method Ensure that *this*
+     * hasn't changed
      *
      */
 
@@ -211,6 +233,7 @@ public abstract class MapTest {
 
     /*
      * standard test case for Map<String,String> size method with empty map
+     * Ensure that *this* hasn't changed
      */
     @Test
     public final void sizeTest2() {
