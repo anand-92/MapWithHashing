@@ -126,6 +126,20 @@ public abstract class MapTest {
     }
 
     /*
+     * standard test case for Map<String,String> add method (elements already
+     * present)
+     */
+    @Test
+    public final void addTest3() {
+        Map<String, String> m = this.createFromArgsRef();
+        Map<String, String> mExpected = this.createFromArgsRef("key1", "value1",
+                "key2", "value2");
+        m.add("key1", "value1");
+        m.add("key2", "value2");
+        assertEquals(mExpected, m);
+    }
+
+    /*
      * standard test case for Map<String,String> remove method
      */
 
@@ -151,6 +165,22 @@ public abstract class MapTest {
                 "value1");
 
         m.remove("key2");
+        assertEquals(mExpected, m);
+    }
+
+    /*
+     * standard test case for Map<String,String> remove method (elements already
+     * present)
+     */
+
+    @Test
+    public final void removeTest3() {
+        Map<String, String> m = this.createFromArgsTest("key1", "value1",
+                "key2", "value2", "key3", "value3");
+        Map<String, String> mExpected = this.createFromArgsRef("key1", "value1",
+                "key2", "value2");
+
+        m.remove("key3");
         assertEquals(mExpected, m);
     }
 
